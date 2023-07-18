@@ -20,7 +20,7 @@ restaurant_namespace="dev-consumer"
 restaurant_port=8093
 cis_namespace="dev-inventory"
 cis_port=8088
-
+cis_redis_port=6379
 kos_namespace="dev-hdr"
 kos_port=8090
 kms_namespace="dev-hdr"
@@ -43,6 +43,6 @@ kubectl port-forward $(kubectl get pods -n $kos_namespace -l $kos_selector -o js
 
 kubectl port-forward $(kubectl get pods -n $kms_namespace -l $kms_selector -o jsonpath='{.items[0].metadata.name}') $kms_port:8443 -n $kms_namespace &
 
-
+#kubectl port-forward redis-0 $cis_redis_port:6379 -n $cis_namespace &
 # Wait for all port forwarding to complete
 wait
