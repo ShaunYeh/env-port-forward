@@ -8,6 +8,7 @@ restaurant_selector="app=restaurant-service-v2"
 cis_selector="app=hdr-inventory-service"
 kos_selector="app=kitchen-order-service"
 kms_selector="app=kitchen-management-service"
+hot_holding_service_selector="app=hot-holding-service"
 
 # Define the namespace and port numbers for each service
 recipe_namespace="uat-master-data"
@@ -25,6 +26,8 @@ kos_namespace="uat-hdr"
 kos_port=8090
 kms_namespace="uat-hdr"
 kms_port=8091
+hot_holding_service_port=9123
+
 
 kubectl config use-context FTIUatAKSClusterV2
 
@@ -42,6 +45,8 @@ kubectl port-forward $(kubectl get pods -n $cis_namespace -l $cis_selector -o js
 kubectl port-forward $(kubectl get pods -n $kos_namespace -l $kos_selector -o jsonpath='{.items[0].metadata.name}') $kos_port:8443 -n $kos_namespace &
 
 kubectl port-forward $(kubectl get pods -n $kms_namespace -l $kms_selector -o jsonpath='{.items[0].metadata.name}') $kms_port:8443 -n $kms_namespace &
+
+kubectl port-forward $(kubectl get pods -n $ims_internal_namespace -l $hot_holding_service_selector -o jsonpath='{.items[0].metadata.name}') $hot_holding_service_port:8443 -n $ims_internal_namespace &
 
 
 # Wait for all port forwarding to complete
