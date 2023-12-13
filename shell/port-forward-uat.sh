@@ -7,6 +7,7 @@ ims_inventory_order_selector="app=ims-inventory-order-service"
 restaurant_selector="app=restaurant-service-v2"
 cis_selector="app=hdr-inventory-service"
 kos_selector="app=kitchen-order-service"
+kcsv2_selector="app=kitchen-cooking-service-v2"
 kms_selector="app=kitchen-management-service"
 hot_holding_service_selector="app=hot-holding-service"
 
@@ -24,6 +25,8 @@ cis_port=8088
 
 kos_namespace="uat-hdr"
 kos_port=8090
+kcsv2_namespace="dev-hdr"
+kcsv2_port=8022
 kms_namespace="uat-hdr"
 kms_port=8091
 hot_holding_service_port=9123
@@ -48,6 +51,7 @@ kubectl port-forward $(kubectl get pods -n $kms_namespace -l $kms_selector -o js
 
 kubectl port-forward $(kubectl get pods -n $ims_internal_namespace -l $hot_holding_service_selector -o jsonpath='{.items[0].metadata.name}') $hot_holding_service_port:8443 -n $ims_internal_namespace &
 
+kubectl port-forward $(kubectl get pods -n $kcsv2_namespace -l $kcsv2_selector -o jsonpath='{.items[0].metadata.name}') $kcsv2_port:8443 -n $kcsv2_namespace &
 
 # Wait for all port forwarding to complete
 wait
