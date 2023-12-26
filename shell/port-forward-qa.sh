@@ -10,6 +10,8 @@ kos_selector="app=kitchen-order-service"
 kcsv2_selector="app=kitchen-cooking-service-v2"
 kms_selector="app=kitchen-management-service"
 hot_holding_service_selector="app=hot-holding-service"
+replenishment_selector="app=replenishment-service"
+
 
 # Define the namespace and port numbers for each service
 recipe_namespace="dev-master-data"
@@ -31,6 +33,9 @@ kms_namespace="dev-hdr"
 kms_port=8091
 hot_holding_service_port=9123
 
+replenishment_port=8501
+replenishment_namespace="dev-ship"
+
 kubectl config use-context FTIDevAKSClusterV2
 
 # Port forward the pods for each service
@@ -51,6 +56,8 @@ kubectl port-forward $(kubectl get pods -n $kms_namespace -l $kms_selector -o js
 kubectl port-forward $(kubectl get pods -n $ims_internal_namespace -l $hot_holding_service_selector -o jsonpath='{.items[0].metadata.name}') $hot_holding_service_port:8443 -n $ims_internal_namespace &
 
 kubectl port-forward $(kubectl get pods -n $kcsv2_namespace -l $kcsv2_selector -o jsonpath='{.items[0].metadata.name}') $kcsv2_port:8443 -n $kcsv2_namespace &
+
+kubectl port-forward $(kubectl get pods -n $replenishment_namespace -l $replenishment_selector -o jsonpath='{.items[0].metadata.name}') $replenishment_port:8443 -n $replenishment_namespace &
 
 #kubectl port-forward redis-0 $cis_redis_port:6379 -n $cis_namespace &
 # Wait for all port forwarding to complete
