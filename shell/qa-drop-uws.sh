@@ -1,0 +1,2 @@
+kubectl --context=FTIDevAKSClusterV2 -n dev-inventory exec -it jenkins-0 -- curl -k -X POST -H "Content-Type: application/json" -d {\"hdr_ids\":[\"74e8d0b9-3eda-4510-8ee2-95314a833b27\"],\"drop_interval\":30} https://hot-holding-service.dev-ship/drop-task-request/generator
+pause
